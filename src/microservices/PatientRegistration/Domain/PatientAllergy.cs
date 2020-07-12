@@ -4,12 +4,10 @@ using System.Collections.Generic;
 namespace eClinic.PatientRegistration.Domain
 {
     public class PatientAllergy : ValueObject
-    {
-        public IEnumerable<string> Allergies { get; set; }
-        
-        public void AddAllergy(string allergy)
+    {        
+        public void AddAllergies(string[] allergies)
         {
-            _allergies.Add(allergy);
+            _allergies.AddRange(allergies);
         }
 
         public string[] ToArray(string allergy)
@@ -19,6 +17,18 @@ namespace eClinic.PatientRegistration.Domain
         }
 
         private List<string> _allergies = new List<string>();
+
+        public string[] Allergies 
+        {
+            get
+            {
+                return _allergies.ToArray();
+            }
+            set
+            {
+                _allergies.AddRange(value);
+            }
+        }
 
     }
 }

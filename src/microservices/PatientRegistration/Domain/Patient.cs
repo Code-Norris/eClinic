@@ -5,7 +5,7 @@ namespace eClinic.PatientRegistration.Domain
         public Patient() {}
 
         public Patient(string name, string identificationNumber, int age, Address homeAddress,
-            double height, double weight, PatientAllergy patientAllergy)
+            double height, double weight, string[] allergies)
         {
             Name = name;
             IdentificationNumber = identificationNumber;
@@ -13,7 +13,7 @@ namespace eClinic.PatientRegistration.Domain
             HomeAddress = homeAddress;
             Height = height;
             Weight = weight;
-            PatientAllergy = patientAllergy;
+            Allergies = allergies;
         }
 
         public string Name { get; set; }
@@ -22,6 +22,6 @@ namespace eClinic.PatientRegistration.Domain
         public Address HomeAddress { get; set; }
         public double Height { get; set; }
         public double Weight { get; set; }
-        public PatientAllergy PatientAllergy { get; set; }
+        public string[]  Allergies { get; set; }
     }
 }
