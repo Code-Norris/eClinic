@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppService\eClinic.PatientRegistration.AppService.csproj" />
+    <ProjectReference Include="..\Domain\eClinic.PatientRegistration.Domain.csproj" />
+    <ProjectReference Include="..\Infra\eClinic.PatientRegistration.Infra.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+  </ItemGroup>
+</Project>
