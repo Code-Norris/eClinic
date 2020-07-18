@@ -13,6 +13,19 @@
                 }
             },
             "problemMatcher": []
+        },
+        {
+            "appId": "patientregistration",
+            "appPort": 6000,
+            "label": "daprd-debug",
+            "type": "daprd",
+            "componentsPath": "./src/microservices/PatientRegistration/Deploy/DaprComponents",
+            "dependsOn": "build PatientRegistration"
+        },
+        {
+            "appId": "patientregistration",
+            "label": "daprd-down",
+            "type": "daprd-down"
         }
     ]
 }

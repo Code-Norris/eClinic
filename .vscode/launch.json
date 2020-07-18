@@ -8,10 +8,10 @@
             "name": "debug PatientRegistration API",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/microservices/PatientRegistration/API/bin/Debug/netcoreapp3.1/eClinic.PatientRegistration.API.dll",
+            "preLaunchTask": "build PatientRegistration",
+            "program": "${workspaceFolder}/src/microservices/PatientRegistration/API/bin/Debug/netcoreapp3.1/eClinic.PatientRegistration.API.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/microservices/PatientRegistration/API",
+            "cwd": "${workspaceFolder}/src/microservices/PatientRegistration/API",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -25,10 +25,27 @@
             }
         },
         {
-            "name": ".NET Core Attach",
+            "name": "debug PatientRegistration API with Dapr",
             "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "request": "launch",
+            "preLaunchTask": "daprd-debug",
+            "program": "${workspaceFolder}/src/microservices/PatientRegistration/API/bin/Debug/netcoreapp3.1/eClinic.PatientRegistration.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/microservices/PatientRegistration/API",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "env" : "dev",
+                "daprPort": 6000
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            },
+            "postDebugTask": "daprd-down"
         }
     ]
 }
