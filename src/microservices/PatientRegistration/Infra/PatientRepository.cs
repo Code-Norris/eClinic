@@ -15,7 +15,7 @@ namespace eClinic.PatientRegistration.Infra
 
         public Task<Patient> CreateNewPatient(Patient patient)
         {
-            
+            throw new NotImplementedException();
            
         }
 
