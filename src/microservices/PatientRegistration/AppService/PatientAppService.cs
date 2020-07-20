@@ -10,36 +10,30 @@ namespace eClinic.PatientRegistration.AppService
 {
     public class PatientAppService : IPatientAppService
     {
-        public PatientAppService(IPatientRepository patientRepo, IMapper objectMapper)
+        public PatientAppService
+            (IPatientRepository patientRepo, IMapper objectMapper,
+            IPatientValidatorDomainService patientValidatorService)
         {
             _patientRepo = patientRepo;
-            _objMapper = objectMapper;
+            _mapper = objectMapper;
+            _patientValidatorService = patientValidatorService;
         }
 
-        public async Task<bool> CreateNewPatient(PatientView patientView)
+        public async Task<PatientCreationResult> CreateNewPatient(PatientView patientView)
         {
-           var patient= _objMapper.Map<PatientView, Patient>(patientView);
+           var homeAddress = _mapper.Map<PatientView, Address>(patientView);
+           var patient= _mapper.Map<PatientView, Patient>(patientView);
+           patient.HomeAddress = homeAddress;
            patient.Id = UniqueId.New();
+
+           var result = _patientValidatorService.ValidatePatientInformation(patient);
+
+           var creationResult =
+            _mapper.Map<PatientInfoValidationResult, PatientCreationResult>(result);
 
            await _patientRepo.CreateNewPatient(patient);
 
-           return true;
-
-        //    patient.Id = UniqueId.New();
-        //    patient.Name = patientView.Name;
-        //    patient.IdentificationNumber = patientView.IdentificationNumber;
-        //    patient.HomeAddress = new Address()
-        //    {
-        //       City =  patientView.City,
-        //       Street = patientView.Street,
-        //       State = patientView.State,
-        //       PostalCode = patientView.PostalCode
-        //    };
-        //    patient.PatientAllergy.AddAllergies(patientView.PatientAllergies);
-
-        //    patient.Height = patientView.Height;
-        //    patient.Weight = patientView.Weight;
-        //    patient.Age = patientView.Age;
+           return creationResult;
         }
 
         public async Task<bool> UpdateExistPatient(PatientView patientView)
@@ -76,7 +70,8 @@ namespace eClinic.PatientRegistration.AppService
             throw new System.NotImplementedException();
         }
 
-        private IMapper _objMapper;
+        private IMapper _mapper;
         private IPatientRepository _patientRepo;
+        private IPatientValidatorDomainService _patientValidatorService;
     }
 }

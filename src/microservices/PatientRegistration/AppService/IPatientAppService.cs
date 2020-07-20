@@ -9,7 +9,7 @@ namespace eClinic.PatientRegistration.AppService
 
         Task<PatientView> FindPatientByIdentificationNumber(string idNumber);
 
-        Task<bool> CreateNewPatient(PatientView patient);
+        Task<PatientCreationResult> CreateNewPatient(PatientView patient);
 
         Task<bool> UpdateExistPatient(PatientView patient);
         

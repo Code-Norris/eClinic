@@ -22,7 +22,7 @@ namespace eClinic.PatientRegistration.Infra
                 new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
                 var mongoClient = new MongoClient(settings);
 
-                return mongoClient.GetDatabase("azworkbench");
+                return mongoClient.GetDatabase("PatientRegistration");
             }
             catch(Exception ex)
             {

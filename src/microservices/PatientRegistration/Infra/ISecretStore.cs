@@ -6,6 +6,6 @@ namespace eClinic.PatientRegistration.Infra
 {
     public interface ISecretStore
     {
-        public Task<Secrets> LoadAsync();
+        public Task<string> GetAsync(string secretName);
     }
 }

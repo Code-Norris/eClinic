@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using eClinic.PatientRegistration.AppService;
+using eClinic.PatientRegistration.Domain;
 using eClinic.PatientRegistration.Infra;
 using FluentAssertions;
 using GenFu;
@@ -8,19 +10,22 @@ using Moq;
 using Xunit;
 using Xunit.Extensions;
 
-namespace eClinic.PatientRegistration.AppService.Test
+namespace eClinic.PatientRegistration.Test
 {
     public class PatientAppServiceTest
     {
         [Fact]
-        public async Task ShouldCreateNewPatient()
+        public async Task CreateNewPatient_ShouldCreateNewPatient()
         {
             //setup
             var patientRepo = new Mock<IPatientRepository>();
 
+            IPatientValidatorDomainService patientInfoValidator = new PatientValidatorDomainService();
+
             var objMapper = new ObjectMapper();
             
-            var patientSvc = new PatientAppService(patientRepo.Object, objMapper.Mapper);
+            var patientSvc =
+                new PatientAppService(patientRepo.Object, objMapper.Mapper, patientInfoValidator);
 
             var pw = A.New<PatientView>();
             pw.Height = 178;
@@ -30,20 +35,7 @@ namespace eClinic.PatientRegistration.AppService.Test
             //act
             var success = await patientSvc.CreateNewPatient(pw);
 
-            success.Should().BeTrue();
+            success.IsValid.Should().BeTrue();
         }
-
-        // public static IEnumerable<PatientView> PatientViews
-        // {
-        //     get 
-        //     {
-        //         return new List<PatientView>()
-        //         {
-        //             {
-        //                 A.New<PatientView>()
-        //             }
-        //         };
-        //     }
-        // }
     }
 }

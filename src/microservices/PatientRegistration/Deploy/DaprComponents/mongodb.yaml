@@ -1,0 +1,20 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: <NAME>
+  namespace: <NAMESPACE>
+spec:
+  type: state.mongodb
+  metadata:
+  - name: host
+    value: <REPLACE-WITH-HOST>
+  - name: username
+    secretKeyRef:
+      name: username
+      key: username
+  - name: password
+    secretKeyRef:
+      name: password
+      key: password
+auth:
+  secretStore: localsecretstore

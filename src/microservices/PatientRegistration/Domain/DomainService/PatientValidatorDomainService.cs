@@ -2,11 +2,15 @@ namespace eClinic.PatientRegistration.Domain
 {
     public class PatientValidatorDomainService : IPatientValidatorDomainService
     {
-        public bool ValidatePatientInformation(Patient patient)
+        public PatientInfoValidationResult ValidatePatientInformation(Patient patient)
         {
             var validator = new PatientInfoValidator();
             var result = validator.Validate(patient);
-            return result.IsValid;
+            return new PatientInfoValidationResult()
+            {
+                IsValid = result.IsValid,
+                Result = string.Join(",", result.RuleSetsExecuted)
+            };
         }
     }
 }

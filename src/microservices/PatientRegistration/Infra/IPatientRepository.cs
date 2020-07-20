@@ -10,7 +10,7 @@ namespace eClinic.PatientRegistration.Infra
 
         Task<Patient> SearchPatientByNameAsync(string namePattern);
 
-        Task<Patient> CreateNewPatient(Patient patient);
+        Task<bool> CreateNewPatient(Patient patient);
 
         Task<Patient> UpdateExistPatient(Patient patient);
     }

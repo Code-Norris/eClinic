@@ -12,13 +12,8 @@ namespace eClinic.PatientRegistration.AppService
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<PatientView, Address>();
                 cfg.CreateMap<PatientView, Patient>();
+                cfg.CreateMap<PatientInfoValidationResult, PatientCreationResult>();
             });
-               //.ForMember(addr => addr.City, opt => opt.MapFrom(src => src.))
-            //});
-
-            // var config = new MapperConfiguration(cfg => {
-                
-            // });
 
             _mapper = config.CreateMapper();
         }

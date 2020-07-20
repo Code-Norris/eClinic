@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
+using Dapr.Client;
 using eClinic.PatientRegistration.AppService;
 using eClinic.PatientRegistration.Domain;
 using eClinic.PatientRegistration.Infra;
@@ -60,7 +61,16 @@ namespace eClinic.PatientRegistration
             var objMapper = new ObjectMapper();
             var mapper = objMapper.Mapper;
 
-            services.AddSingleton(typeof(IMapper), mapper);
+            string daprPort = Environment.GetEnvironmentVariable("DAPR_GRPC_PORT") ?? "50001";
+
+            // var client = new DaprClientBuilder()
+            //     .UseEndpoint($"http://127.0.0.1:{daprPort}")
+            //     .Build();
+            // services.AddSingleton<DaprClient>(client);
+
+            services.AddSingleton<IMapper>(mapper);
+
+            services.AddTransient<ISecretStore, SecretStore>();
 
             services.AddTransient
                 <IPatientValidatorDomainService,PatientValidatorDomainService>();

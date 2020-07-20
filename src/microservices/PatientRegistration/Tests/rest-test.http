@@ -1,0 +1,19 @@
+POST http://localhost:6000/patient/new HTTP/1.1
+content-type: application/json
+
+{
+    "Name": "Bruce Banner",
+    "IdentificationNumber": "S8433750F",
+    "Age": 36,
+    "Street": "angel street",
+    "City": "has-fallen",
+    "State": "city state",
+    "PostalCode": "99501",
+    "Height": 178,
+    "Weight": 65,
+    "Allergies": ["Aspirin", "penicillin", "ibuprofen"]
+}
+
+    
+GET http://localhost:3500/v1.0/secrets/secretstore/CosmosConnString HTTP/1.1
+content-type: application/json

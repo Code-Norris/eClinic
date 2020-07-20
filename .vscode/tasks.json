@@ -15,11 +15,24 @@
             "problemMatcher": []
         },
         {
+            "label": "Dapr Run PatientRegistration",
+            "command": "dapr run --app-id \"patientregistration\" --app-port \"6000\" --port \"3500\" --grpc-port \"50001\" dotnet run",
+            "type": "shell",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/src/microservices/PatientRegistration/API",
+                "env": {
+                    "ASPNETCORE_ENVIRONMENT": "Development"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
             "appId": "patientregistration",
             "appPort": 6000,
+            "httpPort": 3500,
             "label": "daprd-debug",
             "type": "daprd",
-            "componentsPath": "./src/microservices/PatientRegistration/Deploy/DaprComponents",
             "dependsOn": "build PatientRegistration"
         },
         {

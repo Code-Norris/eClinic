@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using Dapr.Client;
 using eClinic.PatientRegistration.Domain;
+using Flurl.Http;
 using MongoDB.Driver;
 
 namespace eClinic.PatientRegistration.Infra
@@ -9,14 +11,16 @@ namespace eClinic.PatientRegistration.Infra
     {
         public PatientRepository(ISecretStore secretStore)
         {
-            InitRepository(secretStore).GetAwaiter().GetResult();
-            InitDatabase();
+            _secretStore = secretStore;
+
+            InitDatabase().GetAwaiter().GetResult();
         }
 
-        public Task<Patient> CreateNewPatient(Patient patient)
+        public async Task<bool> CreateNewPatient(Patient patient)
         {
-            throw new NotImplementedException();
-           
+           var collection = _db.GetCollection<Patient>("Patient");
+           await collection.InsertOneAsync(patient);
+           return true;
         }
 
         public Task<Patient> FindPatientByIdentificaionNumberAsync(string identificationNumber)
@@ -34,24 +38,17 @@ namespace eClinic.PatientRegistration.Infra
             throw new NotImplementedException();
         }
 
-        public async Task InitRepository(ISecretStore secretStore)
+        public async Task<bool> InitDatabase()
         {
-            _secretStore = secretStore;
+            //string connString = "mongodb://cosmosmongo-patientregistration:WGxgVuWF6hsa9il5tg9WkNaP2idsFz3anf8O7N87oORKYfgjgDFjsiVDdJWWJB7UkQoNaxiNOvtVpkppQx3Gvg==@cosmosmongo-patientregistration.documents.azure.com:10255/?ssl=true&replicaSet=globaldb";
+            string connString = await _secretStore.GetAsync("CosmosConnString");
 
-            if(_secretStore == null)
-                throw new ArgumentNullException("ISecretStore is null");
+            _db = MongoDbHelper.GetDatabase(connString);
 
-            _secrets = await _secretStore.LoadAsync();
-        }
-
-        public bool InitDatabase()
-        {
-            _db = MongoDbHelper.GetDatabase(_secrets.CosmosConnString);
             return true;
         }
 
         private ISecretStore _secretStore;
-        private Secrets _secrets;
         private IMongoDatabase _db;
     }
 }
