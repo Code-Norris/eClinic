@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-patientregistration
+  namespace: default
+  labels:
+    app: svc-patientregistration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: svc-patientregistration
+  template:
+    metadata:
+      labels:
+        app: svc-patientregistration
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "svc-patientregistration"
+        dapr.io/log-as-json: "true"

@@ -17,23 +17,33 @@ namespace eClinic.PatientRegistration.Test
         [Fact]
         public async Task CreateNewPatient_ShouldCreateNewPatient()
         {
+            var patientView = A.New<PatientView>();
+            patientView.Height = 178;
+            patientView.Weight = 78;
+            patientView.Allergies = new string[] {"penicillin", "ibuprofen", "apirin"};
+
+            var mapper = new ObjectMapper();
+            var patient = mapper.Mapper.Map<PatientView, Patient>(patientView);
+
             //setup
             var patientRepo = new Mock<IPatientRepository>();
+            patientRepo
+                .Setup(x => x.CreateNewPatient(patient))
+                .ReturnsAsync(true);
 
-            IPatientValidatorDomainService patientInfoValidator = new PatientValidatorDomainService();
+            var patientInfoValidator = new Mock<IPatientValidatorDomainService>();
+            patientInfoValidator
+                .Setup(x => x.ValidatePatientInformation(patient))
+                .Returns(new PatientInfoValidationResult()
+                {
+                   IsValid = true 
+                });
 
-            var objMapper = new ObjectMapper();
-            
             var patientSvc =
-                new PatientAppService(patientRepo.Object, objMapper.Mapper, patientInfoValidator);
-
-            var pw = A.New<PatientView>();
-            pw.Height = 178;
-            pw.Weight = 78;
-            pw.Allergies = new string[] {"penicillin", "ibuprofen", "apirin"};
+                new PatientAppService(patientRepo.Object, mapper.Mapper, patientInfoValidator.Object);
 
             //act
-            var success = await patientSvc.CreateNewPatient(pw);
+            var success = await patientSvc.CreateNewPatient(patientView);
 
             success.IsValid.Should().BeTrue();
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Dapr.Client;
 using eClinic.PatientRegistration.Domain;
 using Flurl.Http;
 using MongoDB.Driver;

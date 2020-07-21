@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
-using Dapr.Client;
 using eClinic.PatientRegistration.AppService;
 using eClinic.PatientRegistration.Domain;
 using eClinic.PatientRegistration.Infra;
@@ -74,6 +73,9 @@ namespace eClinic.PatientRegistration
 
             services.AddTransient
                 <IPatientValidatorDomainService,PatientValidatorDomainService>();
+            
+            var consoleLogger = new ConsoleLogger();
+            services.AddSingleton<IAppLogger>(consoleLogger);
 
             services.AddTransient<IPatientAppService,PatientAppService>();
 

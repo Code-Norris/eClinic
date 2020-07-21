@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Dapr.Client;
 using eClinic.PatientRegistration.Domain;
 using Flurl;
 using Flurl.Http;
@@ -25,7 +24,8 @@ namespace eClinic.PatientRegistration.Infra
 
         public string GetSecretUrl(string secretName)
         {
-            string daprApiPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "3500";
+            string daprApiPort =
+                Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "3500";
             string secretUrl =
                 $"http://localhost:{daprApiPort}/v1.0/secrets/secretstore/{secretName}";
 
