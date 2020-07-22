@@ -11,8 +11,6 @@ namespace eClinic.PatientRegistration.Infra
     {
         public async Task<string> GetAsync(string secretName)
         {
-            //https://github.com/dapr/docs/blob/master/reference/api/secrets_api.md
-
            string url = GetSecretUrl(secretName);
 
            dynamic secretJson = await url.GetJsonAsync();

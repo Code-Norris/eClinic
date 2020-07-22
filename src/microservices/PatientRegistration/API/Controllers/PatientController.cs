@@ -23,11 +23,9 @@ namespace eClinic.PatientRegistration.Controllers
         [HttpPost("new")]
         public async Task CreateNewPatient(PatientView patient)
         {
-            _logger.Info("CreateNewPatient start");
+            throw new ExecutionEngineException("on purpose");
 
             await patientAppSvc.CreateNewPatient(patient);
-
-            _logger.Info("CreateNewPatient end");
         }
 
         private IPatientAppService patientAppSvc;

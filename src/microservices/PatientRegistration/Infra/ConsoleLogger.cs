@@ -1,5 +1,6 @@
 using System;
 using Serilog;
+using Serilog.Formatting.Elasticsearch;
 
 namespace eClinic.PatientRegistration.Infra
 {
@@ -9,7 +10,7 @@ namespace eClinic.PatientRegistration.Infra
         {
             _logger = new LoggerConfiguration()
                 .WriteTo
-                .Console()
+                .Console(new ElasticsearchJsonFormatter())
                 .CreateLogger();
 
         }

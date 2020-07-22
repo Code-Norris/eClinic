@@ -8,7 +8,9 @@ using eClinic.PatientRegistration.AppService;
 using eClinic.PatientRegistration.Domain;
 using eClinic.PatientRegistration.Infra;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +45,21 @@ namespace eClinic.PatientRegistration
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseExceptionHandler(errorApp => {
+
+                errorApp.Run(async context => {
+
+                    var exceptionHandlerPathFeature = 
+                        context.Features.Get<IExceptionHandlerPathFeature>();
+                    
+                   _logger.Error(exceptionHandlerPathFeature.Error); //log error stdout
+
+                   context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync("An error occured at services");
+
+                });
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -60,13 +77,6 @@ namespace eClinic.PatientRegistration
             var objMapper = new ObjectMapper();
             var mapper = objMapper.Mapper;
 
-            string daprPort = Environment.GetEnvironmentVariable("DAPR_GRPC_PORT") ?? "50001";
-
-            // var client = new DaprClientBuilder()
-            //     .UseEndpoint($"http://127.0.0.1:{daprPort}")
-            //     .Build();
-            // services.AddSingleton<DaprClient>(client);
-
             services.AddSingleton<IMapper>(mapper);
 
             services.AddTransient<ISecretStore, SecretStore>();
@@ -74,12 +84,14 @@ namespace eClinic.PatientRegistration
             services.AddTransient
                 <IPatientValidatorDomainService,PatientValidatorDomainService>();
             
-            var consoleLogger = new ConsoleLogger();
-            services.AddSingleton<IAppLogger>(consoleLogger);
+            _logger = new ConsoleLogger();
+            services.AddSingleton<IAppLogger>(_logger);
 
             services.AddTransient<IPatientAppService,PatientAppService>();
 
             services.AddTransient<IPatientRepository,PatientRepository>();
         }
+
+        private IAppLogger _logger;
     }
 }
