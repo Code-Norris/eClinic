@@ -1,0 +1,1 @@
+docker build ../ -f Dockerfile -t acreClinic.azurecr.io/patientregistration/v0.1

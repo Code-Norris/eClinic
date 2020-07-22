@@ -1,16 +1,23 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
-WORKDIR /app
+WORKDIR /src
 
 # Copy csproj and restore as distinct layers
-COPY *.csproj ./
+COPY . /src
+
+WORKDIR /src/API
+
 RUN dotnet restore
 
+RUN dotnet publish -c Release -o ./publish
+
+WORKDIR /src/API/publish
+
 # Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+#COPY . ./
+#RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+COPY --from=build-env /src/API/publish /app
+ENTRYPOINT ["dotnet", "eClinic.PatientRegistration.API.dll"]
