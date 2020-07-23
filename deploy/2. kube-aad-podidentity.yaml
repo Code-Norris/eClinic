@@ -1,0 +1,16 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: kube-eclinic-agentpool
+spec:
+  type: 0
+  ResourceID: /subscriptions/ee611083-4581-4ba1-88888888888/resourceGroups/MC_rg-eClinic_kube-eClinic_southeastasia/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kube-eClinic-agentpool
+  ClientID: 7c20ef39-5b01-431c-90ad-88888888888
+---
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentityBinding
+metadata:
+  name: kube-eclinic-agentpool-identity-binding
+spec:
+  AzureIdentity:  kube.eclinic.agentpool
+  Selector:  kube-eclinic-agentpool

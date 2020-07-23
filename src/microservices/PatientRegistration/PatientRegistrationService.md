@@ -1,1 +1,1 @@
-docker build ../ -f Dockerfile -t acreClinic.azurecr.io/patientregistration/v0.1
+docker build -f ./API/Dockerfile -t acreclinic.azurecr.io/eclinic/patientregistration:0.0.1 --no-cache .
