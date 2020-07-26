@@ -39,8 +39,7 @@ namespace eClinic.PatientRegistration.Infra
 
         public async Task<bool> InitDatabase()
         {
-            //string connString = "mongodb://cosmosmongo-patientregistration:WGxgVuWF6hsa9il5tg9WkNaP2idsFz3anf8O7N87oORKYfgjgDFjsiVDdJWWJB7UkQoNaxiNOvtVpkppQx3Gvg==@cosmosmongo-patientregistration.documents.azure.com:10255/?ssl=true&replicaSet=globaldb";
-            string connString = await _secretStore.GetAsync("CosmosConnString");
+            string connString = await _secretStore.GetAsync("pr-cosmosmongoconnstring");
 
             _db = MongoDbHelper.GetDatabase(connString);
 

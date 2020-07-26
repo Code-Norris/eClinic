@@ -27,7 +27,7 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   name: fluentd
-  namespace: default
+  namespace: kube-system
 roleRef:
   kind: ClusterRole
   name: fluentd
@@ -66,7 +66,7 @@ spec:
         image: fluent/fluentd-kubernetes-daemonset:v1.9.2-debian-elasticsearch7-1.0
         env:
           - name:  FLUENT_ELASTICSEARCH_HOST
-            value: "elasticsearch-master.dapr-monitoring"
+            value: "elasticsearch-master.dapr-mon"
           - name:  FLUENT_ELASTICSEARCH_PORT
             value: "9200"
           - name: FLUENT_ELASTICSEARCH_SCHEME

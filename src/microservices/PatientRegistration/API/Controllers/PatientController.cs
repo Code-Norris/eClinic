@@ -23,11 +23,7 @@ namespace eClinic.PatientRegistration.Controllers
         [HttpPost("new")]
         public async Task CreateNewPatient(PatientView patient)
         {
-            _logger.Info("patientregistration.CreateNewPatient.started");
-
             await patientAppSvc.CreateNewPatient(patient);
-
-            _logger.Info("patientregistration.CreateNewPatient.ended");
         }
 
         private IPatientAppService patientAppSvc;
