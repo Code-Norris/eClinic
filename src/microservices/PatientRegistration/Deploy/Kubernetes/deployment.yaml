@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploy-api-patientregistration
+  name: deploy-api-pr
   namespace: eclinic
   labels:
-    app: api-patientregistration
+    app: api-pr
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: api-patientregistration
+      app: api-pr
   template:
     metadata:
       labels:
-        app: api-patientregistration
-        aadpodidbinding: kube-eclinic-agentpool
+        app: api-pr
+        aadpodidbinding: aadpodidentity-kube-eclinic-agentpool
       annotations:
         dapr.io/enabled: "true"
         dapr.io/log-level: "info"
         dapr.io/log-as-json: "true"
-        dapr.io/id: "api-patientregistration"
+        dapr.io/id: "api-pr"
         dapr.io/port: "6000"
     spec:
       containers:
-        - name: patientregistration
-          image: acreclinic.azurecr.io/eclinic/patientregistration:0.0.2
+        - name: api-pr
+          image: acreclinic.azurecr.io/eclinic/patientregistration:0.0.7
           ports:
             - containerPort: 6000
           imagePullPolicy: Always

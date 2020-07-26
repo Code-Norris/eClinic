@@ -1,3 +1,5 @@
+using System;
+
 namespace eClinic.PatientRegistration.AppService
 {
     public class PatientView

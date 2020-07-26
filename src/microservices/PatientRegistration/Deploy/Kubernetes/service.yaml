@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: svc-patientregistration
+  name: svc-pr
   namespace: eclinic
 spec:
   selector:
-    app:  api-patientregistration
+    app:  api-pr
   ports:
     - protocol: TCP
       port: 80

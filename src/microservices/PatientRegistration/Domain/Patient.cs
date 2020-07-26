@@ -1,3 +1,5 @@
+using System;
+
 namespace eClinic.PatientRegistration.Domain
 {
     public class Patient : AggregateRoot
@@ -23,5 +25,6 @@ namespace eClinic.PatientRegistration.Domain
         public double Height { get; set; }
         public double Weight { get; set; }
         public string[]  Allergies { get; set; }
+        public DateTime RegistrationTime { get; set; } = DateTime.Now;
     }
 }
