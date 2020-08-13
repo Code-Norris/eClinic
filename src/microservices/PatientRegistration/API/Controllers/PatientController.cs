@@ -21,9 +21,15 @@ namespace eClinic.PatientRegistration.Controllers
         }
 
         [HttpPost("new")]
-        public async Task CreateNewPatient(PatientView patient)
+        public async Task<PatientCreationResult> CreateNewPatient(PatientView patient)
         {
-            await patientAppSvc.CreateNewPatient(patient);
+            return await patientAppSvc.CreateNewPatient(patient);
+        }
+
+        [HttpPost("register")]
+        public async Task<bool> RegisterNewPatient(PatientView patient)
+        {
+            return true;
         }
 
         private IPatientAppService patientAppSvc;
