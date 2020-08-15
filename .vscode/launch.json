@@ -6,8 +6,10 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/src/microservices/QueueSystem/cmd/main.go",
-            "env": {},
+            "program": "${workspaceFolder}/src/microservices/QueueSystem/src/queuesystem.go",
+            "env": {
+                "env" : "dev"
+            },
             "args": []
         },
         {

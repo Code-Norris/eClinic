@@ -3,11 +3,24 @@
     "tasks": [
         {
             "label": "go run Queue",
-            "command": "go run main.go",
+            "command": "go run queuesystem.go",
             "type": "shell",
             "args": [],
             "options": {
-                "cwd": "${workspaceFolder}/src/microservices/QueueSystem/cmd"
+                "cwd": "${workspaceFolder}/src/microservices/QueueSystem/src",
+                "env": {
+                    "env": "dev"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "go build Queue",
+            "command": "go build queuesystem.go",
+            "type": "shell",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/src/microservices/QueueSystem/src"
             },
             "problemMatcher": []
         },

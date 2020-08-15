@@ -4,8 +4,8 @@ metadata:
   name: aadpodidentity-kube-eclinic-agentpool
 spec:
   type: 0
-  ResourceID: /subscriptions/eexxxxx-45xx-4ba1-8116-xxxxxxxxxxx/resourceGroups/MC_rg-eClinic_kube-eClinic_southeastasia/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kube-eClinic-agentpool
-  ClientID: 7c20xxxxx-5bxx-431c-90ad-xxxxxxxxxxx
+  ResourceID: /subscriptions/eexxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx/resourceGroups/MC_rg-eClinic_kube-eClinic_southeastasia/providers/Microsoft.ManagedIdentity/userAssignedIdentities/kube-eClinic-agentpool
+  ClientID: 7c20xxxxx-xxxx-xxxc-xxxx-xxxxxxxxxxx
 ---
 apiVersion: "aadpodidentity.k8s.io/v1"
 kind: AzureIdentityBinding
