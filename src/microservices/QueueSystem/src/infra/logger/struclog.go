@@ -18,11 +18,11 @@ type StrucLogger struct {
 }
 
 func (sl *StrucLogger) Info(msg string) {
-	_logger.Info(msg)
+	_logger.Info(msg, zap.String("app","qs"))
 }
 
 func (sl *StrucLogger) Err(err error) {
-	
+	_logger.Error(err.Error(), zap.String("app","qs"))
 }
 
 func Init() (*StrucLogger) {
@@ -30,8 +30,10 @@ func Init() (*StrucLogger) {
 	// logger = _logger.Sugar()
 
 	loggerConfig := zap.NewProductionConfig()
+
 	loggerConfig.EncoderConfig.TimeKey = "timestamp"
 	loggerConfig.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	loggerConfig.EncoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
 	logger, err := loggerConfig.Build()
 
 	if(err != nil) {

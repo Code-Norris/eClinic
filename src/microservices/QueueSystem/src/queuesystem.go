@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"eClinic.com/QueueSystem/infra/secret"
 	"eClinic.com/QueueSystem/infra/logger"
+	"errors"
 )
 
 func main() {
@@ -17,7 +18,9 @@ func main() {
 
 	struclogger := logger.Init()
 
-	struclogger.Info("hello from loger")
+	struclogger.Info("hello from logger")
+
+	struclogger.Err(errors.New("fatal error"))
 }
 
 // func main() {
