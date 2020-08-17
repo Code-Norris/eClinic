@@ -2,12 +2,17 @@ package main
 
 import (
 	"fmt"
+	"eClinic.com/QueueSystem/domain"
 	"eClinic.com/QueueSystem/infra/secret"
 	"eClinic.com/QueueSystem/infra/logger"
-	"errors"
+	"eClinic.com/QueueSystem/infra/msgbroker"
+	"time"
+	"bufio"
+	"os"
 )
 
 func main() {
+	
 	secret, err := secret.Init()
 
 	if err != nil {
@@ -18,9 +23,28 @@ func main() {
 
 	struclogger := logger.Init()
 
-	struclogger.Info("hello from logger")
+	struclogger.Info("nats: start publishing")
 
-	struclogger.Err(errors.New("fatal error"))
+	natsbroker := msgbroker.New()
+
+	patient := domain.Patient{
+		ID:"sddasaw22", 
+		Name:"carebear",
+		QueueInfo: domain.QueueInfo{
+			Number:5,
+			PatientID: "sddasaw22",
+			CreatedAt: time.Now() } }
+	
+	natsbroker.EnqueuePatientForConsultation(patient)
+
+	time.Sleep(2 * time.Second)
+
+	natsbroker.DequeuePatientFromConsultation()
+
+	
+	input := bufio.NewScanner(os.Stdin)
+    input.Scan()
+
 }
 
 // func main() {

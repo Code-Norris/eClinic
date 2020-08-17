@@ -3,14 +3,13 @@ package api
 import (
 	"net/http"
 	"github.com/gorilla/mux"
-	"errors"
 )
 
 func APIInit() {
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/api/queue/patientreg", EnqueuePatient).Methods("GET")
+	router.HandleFunc("/api/queue/consultation", EnqueuePatient).Methods("GET")
 
 }
 
