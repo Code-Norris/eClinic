@@ -22,7 +22,9 @@ func (sl *StrucLogger) Info(msg string) {
 }
 
 func (sl *StrucLogger) Err(err error) {
-	_logger.Error(err.Error(), zap.String("app","qs"))
+	if err != nil {
+		_logger.Error(err.Error(), zap.String("app","qs"))
+	}
 }
 
 func Init() (*StrucLogger) {

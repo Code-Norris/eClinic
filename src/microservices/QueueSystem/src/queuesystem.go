@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"eClinic.com/QueueSystem/domain"
+	//"eClinic.com/QueueSystem/domain"
 	"eClinic.com/QueueSystem/infra/secret"
 	"eClinic.com/QueueSystem/infra/logger"
-	"eClinic.com/QueueSystem/infra/msgbroker"
-	"time"
-	"bufio"
-	"os"
+	//"eClinic.com/QueueSystem/infra/msgbroker"
+	//"time"
+	//"encoding/json"
+	"runtime"
 )
 
 func main() {
@@ -25,26 +25,26 @@ func main() {
 
 	struclogger.Info("nats: start publishing")
 
-	natsbroker := msgbroker.New()
+	// natsbroker := msgbroker.New()
 
-	patient := domain.Patient{
-		ID:"sddasaw22", 
-		Name:"carebear",
-		QueueInfo: domain.QueueInfo{
-			Number:5,
-			PatientID: "sddasaw22",
-			CreatedAt: time.Now() } }
-	
-	natsbroker.EnqueuePatientForConsultation(patient)
+	// patient := domain.Patient{
+	// 	ID:"sddasaw22", 
+	// 	Name:"carebear",
+	// 	QueueInfo: domain.QueueInfo{
+	// 		Number:5,
+	// 		PatientID: "sddasaw22",
+	// 		CreatedAt: time.Now() } }
 
-	time.Sleep(2 * time.Second)
+	// natsbroker.SubscribePatientFromConsultation(func (p domain.Patient){
+	// 	jp,_ := json.Marshal(p)
+	// 	struclogger.Info("patient from consultation: " + string(jp))
+	// })
 
-	natsbroker.DequeuePatientFromConsultation()
+	// time.Sleep(2 * time.Second)
 
-	
-	input := bufio.NewScanner(os.Stdin)
-    input.Scan()
+	// natsbroker.EnqueuePatientForConsultation(patient)
 
+	 runtime.Goexit()
 }
 
 // func main() {
