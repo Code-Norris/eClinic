@@ -2,6 +2,45 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "go Build Wails",
+            "command": "go build",
+            "type": "shell",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/src/frontend/desktop",
+                "env": {
+                    "env": "dev"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "build Wails",
+            "command": "wails build -d",
+            "type": "shell",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/src/frontend/desktop",
+                "env": {
+                    "env": "dev"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run React-Desktop",
+            "command": "go run main.go",
+            "type": "shell",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/src/frontend/desktop",
+                "env": {
+                    "env": "dev"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "go run Queue",
             "command": "go run queuesystem.go",
             "type": "shell",
@@ -37,6 +76,7 @@
             },
             "problemMatcher": []
         },
+        
         {
             "label": "Dapr Run PatientRegistration",
             "command": "dapr run --app-id \"patientregistration\" --app-port \"6000\" --port \"3500\" --grpc-port \"50001\" dotnet run",

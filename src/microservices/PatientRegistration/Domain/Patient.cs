@@ -18,6 +18,7 @@ namespace eClinic.PatientRegistration.Domain
             Allergies = allergies;
         }
 
+        public string IDCardNumber { get; set; }
         public string Name { get; set; }
         public string IdentificationNumber { get; set; }
         public int Age { get; set; }

@@ -1,8 +1,24 @@
 package domain
 
+import (
+	"time"
+)
+
+type Address struct {
+	Street string
+    City string
+    State string
+    PostalCode string
+}
 
 type Patient struct {
-	ID string
+	IDCardNumber string
 	Name string
-	QueueInfo QueueInfo
+	IdentificationNumber string
+	Age int
+	HomeAddress Address
+    Height float32
+    Weight float32
+	Allergies []string
+    RegistrationTime time.Time = time.Now()
 }

@@ -10,14 +10,14 @@ using Microsoft.Extensions.Logging;
 namespace eClinic.PatientRegistration.Controllers
 {
     [ApiController]
-    [Route("healthz")]
+    [Route("api")]
     public class HealthController : ControllerBase
     {
         public HealthController()
         {
         }
 
-        [HttpGet()]
+        [HttpGet("healthz")]
         public string GetHealth()
         {
            
