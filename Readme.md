@@ -4,7 +4,7 @@ eClinic is a demo project that aims to highlight all possible challenges of a sy
 and showing the possible tactics that can solve these challenges
 
 * Desktop Frontend with Go Wails and Reactjs
-* AuthN with Azure AD and App 
+* AuthN with Azure AD 
 * AuthZ with Open Policy Agent
 * Inter-service domain events messaging with Nats
 * Inter-service API calls with Linkerd (evaluating)
