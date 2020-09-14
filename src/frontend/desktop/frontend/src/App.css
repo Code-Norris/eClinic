@@ -1,7 +1,18 @@
+.App {
+
+}
+
 .signin {
-  position: fixed; /* or absolute */
-  top: 50%;
-  left: 50%;
+  position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  justify-content: 'center';
+  alignItems: 'center';
+	margin: auto;
+  width: 200px;
+  height: 150px;
 }
 
 .App-logo {

@@ -2,12 +2,25 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "go Build Wails",
-            "command": "go build",
+            "label": "go run Wails main",
+            "command": "go run main.go",
             "type": "shell",
             "args": [],
             "options": {
                 "cwd": "${workspaceFolder}/src/frontend/desktop",
+                "env": {
+                    "env": "dev"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "npm run Wails React",
+            "command": "npm run start",
+            "type": "shell",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/src/frontend/desktop/frontend",
                 "env": {
                     "env": "dev"
                 }

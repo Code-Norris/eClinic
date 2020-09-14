@@ -4,6 +4,7 @@ import (
   "github.com/leaanthony/mewn"
   "github.com/wailsapp/wails"
   "elinic/desktop/pkg/config"
+  "fmt"
 )
 
 func basic() string {
@@ -25,7 +26,9 @@ func main() {
   })
 
   config.Init()
-  configs := &config.Config
+  configs := config.Config
+
+  fmt.Println(configs.AzureAD.AADUrl)
 
   app.Bind(configs)
   app.Bind(basic)

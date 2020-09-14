@@ -8,20 +8,21 @@ import Typography from '@material-ui/core/Typography';
 import AuthService from '../services/AuthService';
 
 export default class SignIn extends Component {
-    constructor() {
+    constructor(props) {
+        super(props)
         this.authsvc = new AuthService();
     }
 
     render() {
         return (
-            <Card className="signin" variant="outlined">
-                <CardContent>
+            <Card className="signin" variant="outlined" >
+                <CardContent style={{ display:'flex', justifyContent:'center' }}>
                     <Typography color="textSecondary" gutterBottom>
                         Welcome to eClinic
                     </Typography>
                     
                 </CardContent>
-                <CardActions>
+                <CardActions style={{ display:'flex', justifyContent:'center' }}>
                     <Button variant="contained" color="primary" onClick={this.login}>
                         Azure AD Login
                     </Button>
@@ -31,6 +32,7 @@ export default class SignIn extends Component {
     }
 
     login() {
-        this.authsvc.signIn();
+        console.log('button clicked')
+        //this.authsvc.signIn();
     }
 }

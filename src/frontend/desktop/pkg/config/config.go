@@ -3,11 +3,10 @@ package config
 import (
 	"os"
 	"github.com/spf13/viper"
-	"fmt"
 )
 
 //Config is a global variable to access configs from other packages
-var Config Configs
+var Config *Configs
 
 type Configs struct {
 	AzureAD AAD			`mapstructure:"aad"`	
@@ -31,14 +30,12 @@ func Init() {
 	}
 	
 	//viper.SetConfigType("yaml") // REQUIRED if the config file does not have the extension in the name
-	v.AddConfigPath(".")   // path to look for the config file in
+	v.AddConfigPath(".") //for exec /bui;d .exe directly
+	v.AddConfigPath("./build/") //config in /build with elinicdesktop.exe
 
 	v.ReadInConfig()
 	//TODO: log err
 
-	// Config = Configs{}
-
-	err := v.Unmarshal(&Config)
-	fmt.Println(err)
-
+	v.Unmarshal(&Config)
+	//TODO: log err
 }
