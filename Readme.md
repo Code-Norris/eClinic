@@ -1,7 +1,7 @@
 ## Overview
 
-eClinic is a demo project that aims to highlight all possible challenges of a system adopting microservices architecural style,
-and showing the possible tactics that can solve these challenges
+eClinic is a demo project that aims to showcase all possible challenges of a system adopting microservices architecural style,
+and demostrating through actual implementation, the possible tactics that can solve these challenges
 
 * Desktop Frontend with Go Wails and Reactjs
 * AuthN with Azure AD 
