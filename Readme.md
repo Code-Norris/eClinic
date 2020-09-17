@@ -1,6 +1,6 @@
 ## Overview
 
-eClinic is a demo project that aims to showcase possible design challenges of a system adopting microservices architecural style,
+Codename Heirloom or eClinic is a e-clinical system that aims to showcase possible design challenges of a system adopting microservices architecural style,
 and demostrating through actual implementation of tactics that can solve these challenges.
 
 * Desktop Frontend with Wails + Reactjs
