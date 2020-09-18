@@ -15,24 +15,26 @@ export default class SignIn extends Component {
 
     render() {
         return (
-            <Card className="signin" variant="outlined" >
-                <CardContent style={{ display:'flex', justifyContent:'center' }}>
-                    <Typography color="textSecondary" gutterBottom>
-                        Welcome to eClinic
-                    </Typography>
-                    
-                </CardContent>
-                <CardActions style={{ display:'flex', justifyContent:'center' }}>
-                    <Button variant="contained" color="primary" onClick={this.login}>
-                        Azure AD Login
-                    </Button>
-                </CardActions>
-            </Card>
+            <div className="signin">
+                <Card className="signinCard" variant="outlined" >
+                    <CardContent style={{ display:'flex', justifyContent:'center' }}>
+                        <Typography color="textSecondary" gutterBottom>
+                            Welcome to eClinic
+                        </Typography>
+                        
+                    </CardContent>
+                    <CardActions style={{ display:'flex', justifyContent:'center' }}>
+                        <Button variant="contained" color="primary" onClick={this.login}>
+                            Azure AD Login
+                        </Button>
+                    </CardActions>
+                </Card>
+            </div>
         );
     }
 
-    login() {
+    login = () => {
         console.log('button clicked')
-        //this.authsvc.signIn();
+        this.authsvc.oidcSignin();
     }
 }

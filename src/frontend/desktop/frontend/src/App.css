@@ -1,8 +1,7 @@
-.App {
-
+.signin{
+  background-image: url("./assets/images/login-background.jpg");
 }
-
-.signin {
+.signinCard {
   position: absolute;
 	top:0;
 	bottom: 0;

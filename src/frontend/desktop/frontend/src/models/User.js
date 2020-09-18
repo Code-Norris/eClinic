@@ -1,10 +1,13 @@
 export default class User
 {
     constructor (){
-        this.AccessToken = '';
         this.TenantId = '';
-        this.UserName = '';
         this.Name = '';
+        this.UserName = '';
         this.AccessTokenExpiresOn = '';
+        this.Scopes = [];
+        this.Issuer = "";
+        this.IdToken = "";
+        this.AccessToken = '';
     }
 }

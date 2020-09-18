@@ -7,10 +7,6 @@ import (
   "fmt"
 )
 
-func basic() string {
-  return "World!"
-}
-
 func main() {
 
   js := mewn.String("./frontend/build/static/js/main.js")
@@ -31,6 +27,6 @@ func main() {
   fmt.Println(configs.AzureAD.AADUrl)
 
   app.Bind(configs)
-  app.Bind(basic)
+
   app.Run()
 }
