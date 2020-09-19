@@ -1,29 +1,32 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 	//"eClinic.com/QueueSystem/domain"
-	"eClinic.com/QueueSystem/infra/secret"
-	"eClinic.com/QueueSystem/infra/logger"
+	"eClinic.com/QueueSystem/api"
+	//"eClinic.com/QueueSystem/infra/secret"
+	//"eClinic.com/QueueSystem/infra/logger"
 	//"eClinic.com/QueueSystem/infra/msgbroker"
 	//"time"
 	//"encoding/json"
-	"runtime"
+	//"runtime"
 )
 
 func main() {
+
+	api.Listen()
 	
-	secret, err := secret.Init()
+	// secret, err := secret.Init()
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 
-	fmt.Println(secret)
+	// fmt.Println(secret)
 
-	logger.Init()
+	// logger.Init()
 
-	logger.LogIE("nats: start publishing")
+	// logger.LogIE("nats: start publishing")
 
 	// natsbroker := msgbroker.New()
 
@@ -44,7 +47,7 @@ func main() {
 
 	// natsbroker.EnqueuePatientForConsultation(patient)
 
-	 runtime.Goexit()
+	 //runtime.Goexit()
 }
 
 

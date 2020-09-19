@@ -1,4 +1,6 @@
-src/app/infra/secret/secret.json
+secret.yaml
+secret.*
+src/app/infra/secret/secret.yaml
 .DS_Store
 *.[56789ao]
 *.a[56789o]

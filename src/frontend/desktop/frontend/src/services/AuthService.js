@@ -1,4 +1,4 @@
-import { UserAgentApplication } from "msal";
+import { PublicClientApplication, InteractionRequiredAuthError } from "@azure/msal-browser";
 import User from "../models/User";
 
 export default class AuthService 
@@ -8,63 +8,82 @@ export default class AuthService
         //https://www.youtube.com/watch?v=Dg9rUXxNV-c
         //var clientid =  window.backend.Config.AzureAD.AADClientId;
         //var authority =  window.backend.Config.AzureAD.AADUrl;
-        var clientid = "14b48a21-c5f7-4c38-b2fd-16361fef68c2";
-        var authority = "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47";
+        this.clientid = "14b48a21-c5f7-4c38-b2fd-16361fef68c2";
+        this.authority = "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47";
+        this.scopes = ["api://eClinic/PatientRegistration/PC.All"];
 
-        //console.log(window.backend.Config)
-        const isIE = () => {
-          const ua = window.navigator.userAgent;
-          const msie = ua.indexOf("MSIE ") > -1;
-          const msie11 = ua.indexOf("Trident/") > -1;
-        
-          // If you as a developer are testing using Edge InPrivate mode, please add "isEdge" to the if check
-          // const isEdge = ua.indexOf("Edge/") > -1;
-        
-          return msie || msie11;
-      };
+        this.msalConfig = {
+          auth: {
+            clientId: this.clientid,
+            authority: this.authority,
+            navigateToLoginRequestUrl: true
+          },
+          cache: {
+            cacheLocation: "sessionStorage", // This configures where your cache will be stored
+            storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
+          }
+        };
 
-        this.msalApp = new UserAgentApplication({
-            auth: {
-              clientId: clientid, 
-              authority: authority, 
-              validateAuthority: true,
-              //postLogoutRedirectUri: Config.PortalUrl(),
-              navigateToLoginRequestUrl: false
-            },
-            cache: {
-              cacheLocation: "sessionStorage",
-              storeAuthStateInCookie: isIE()
-            }
-          });
+        // Add scopes here for ID token to be used at Microsoft identity platform endpoints.
+        this.authnIdTokenScopes = {
+          scopes: this.scopes
+        };
         
-        
+        // Add scopes here for access token to be used at Microsoft Graph API endpoints.
+        const authzAccessTokenScope = {
+          scopes: this.scopes
+        };
+
+        this.msalApp = new PublicClientApplication(this.msalConfig);
     }
 
+    //https://docs.microsoft.com/en-us/azure/active-directory/develop/tutorial-v2-javascript-auth-code
     oidcSignin() {
-
-       // var scope = window.backend.Config.AzureAD.AADScope
-       var scope = "api://14b48a21-c5f7-4c38-b2fd-16361fef68c2/desktop/All";
        
-        this.msalApp.loginPopup(scope)
-          .then(loginResponse => {
-            console.log('id_token acquired at: ' + new Date().toString());
-            console.log(loginResponse);
+      var signedInUser = this.msalApp.getAllAccounts()[0];
+        this.silentRequest = {
+          account: signedInUser,
+          scopes: this.scopes
+        }
+        
+      this.msalApp.acquireTokenSilent(this.silentRequest)
+      .then((response) => {
 
-            this.oauthGetAccessTokenSilent(scope);
+        var user = this.createUser(response);
 
+      }).catch(error => {
 
-            // if (this.msalApp.getAccount()) {
-            //   var acct = this.msalApp.getAccount();
-            // }
-          }).catch(error => {
-            console.log(error);
-          });
+        console.warn("silent token acquisition fails. acquiring token using redirect");
+
+        // fallback to interaction when silent call fails
+        this.msalApp.loginPopup(this.authnIdTokenScopes).then((response) => {
+
+          var user = this.createUser(response);
+  
+        }).catch(err => {console.error(err)});
+        
+      })
     }
 
-    oauthGetAccessTokenSilent(scope) {
+    createUser(tokenResp) {
+        var user = new User();
+        user.TenantId = tokenResp.tenantId;
+        user.UserName = tokenResp.account.username;
+        user.Name = tokenResp.account.name;
+        user.AccessTokenExpiresOn = tokenResp.expiresOn;
+        user.Scopes = tokenResp.scopes;
+        user.Issuer = tokenResp.idTokenClaims.iss;
+        user.AccessToken = tokenResp.accessToken;
+        user.IdToken = tokenResp.idToken;
+
+        return user;
+    }
+
+    oauthGetAccessTokenSilent() {
 
       var tokenRequest = {
-        scopes: [scope],
+        authority: this.authority,
+        scopes: [this.scope],
         prompt: 'consent'
       };
       
