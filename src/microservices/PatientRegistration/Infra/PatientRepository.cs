@@ -8,12 +8,16 @@ namespace eClinic.PatientRegistration.Infra
 {
     public class PatientRepository : IPatientRepository
     {
-        public PatientRepository(ISecretStore secretStore)
+        public PatientRepository()
         {
-            _secretStore = secretStore;
-
-            InitDatabase().GetAwaiter().GetResult();
         }
+
+        // public PatientRepository(ISecretStore secretStore)
+        // {
+        //     _secretStore = secretStore;
+
+        //     InitDatabase().GetAwaiter().GetResult();
+        // }
 
         public async Task<bool> CreateNewPatient(Patient patient)
         {

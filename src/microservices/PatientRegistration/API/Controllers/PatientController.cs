@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using eClinic.PatientRegistration.AppService;
 using eClinic.PatientRegistration.Infra;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace eClinic.PatientRegistration.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
+    [Produces("application/json")]
+    [Route("api/pr")]
     public class PatientController : ControllerBase
     {
         public PatientController
@@ -18,6 +19,12 @@ namespace eClinic.PatientRegistration.Controllers
         {
             patientAppSvc = patientService;
             _logger = appLogger;
+        }
+
+        [Authorize()]
+        [HttpGet("test")]
+        public IEnumerable<string> Test(){
+            return User.Claims.Select(x => x.Value).ToList();
         }
 
         [HttpPost("new")]

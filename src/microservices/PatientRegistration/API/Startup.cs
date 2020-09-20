@@ -11,12 +11,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using Microsoft.Identity.Web;
 
 namespace eClinic.PatientRegistration
 {
@@ -27,12 +31,30 @@ namespace eClinic.PatientRegistration
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; set;}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", false)
+                .Build();
+                
             BuildDependency(services);
+
+        services.AddMicrosoftIdentityWebApiAuthentication(Configuration, "AzureAd");
+
+        // services.AddAuthentication(AzureADDefaults.JwtBearerAuthenticationScheme)
+        //   .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+
+            // services.AddMicrosoftIdentityWebAppAuthentication
+            //     (Configuration, "AzureAd","OpenIdConnect","Cookies");
+
+                    //.EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
+                    //.AddInMemoryTokenCaches();
+            //   services.AddMi(AzureADDefaults.AuthenticationScheme)
+            //     .AddAzureAD(options => config.Bind("AzureAd", options));
             
             services.AddControllers();
         }
@@ -64,6 +86,8 @@ namespace eClinic.PatientRegistration
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -93,5 +117,9 @@ namespace eClinic.PatientRegistration
         }
 
         private IAppLogger _logger;
+    }
+
+    internal class AzureADDefaults
+    {
     }
 }

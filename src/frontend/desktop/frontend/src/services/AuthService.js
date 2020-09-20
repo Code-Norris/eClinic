@@ -5,9 +5,6 @@ export default class AuthService
 {
     constructor() {
      
-        //https://www.youtube.com/watch?v=Dg9rUXxNV-c
-        //var clientid =  window.backend.Config.AzureAD.AADClientId;
-        //var authority =  window.backend.Config.AzureAD.AADUrl;
         this.clientid = "14b48a21-c5f7-4c38-b2fd-16361fef68c2";
         this.authority = "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47";
         this.scopes = ["api://eClinic/PatientRegistration/PC.All"];
@@ -45,7 +42,7 @@ export default class AuthService
           account: signedInUser,
           scopes: this.scopes
         }
-        
+
       this.msalApp.acquireTokenSilent(this.silentRequest)
       .then((response) => {
 
