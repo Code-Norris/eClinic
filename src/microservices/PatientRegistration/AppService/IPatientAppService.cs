@@ -5,13 +5,15 @@ namespace eClinic.PatientRegistration.AppService
 {
     public interface IPatientAppService
     {
-        Task<IEnumerable<PatientView>> SearchPatientByName(string nameContains);
+        Task<IEnumerable<PatientSearchResult>> SearchPatientByName(string nameContains);
 
-        Task<PatientView> FindPatientByIdentificationNumber(string idNumber);
+        Task<PatientSearchResult> FindPatientByIDCardNumber(string idNumber);
 
-        Task<PatientCreationResult> CreateNewPatient(PatientView patient);
+        Task<PatientRegistrationResult> RegisterPatient(string patientId, string accessToken);
 
-        Task<bool> UpdateExistPatient(PatientView patient);
+        Task<bool> CreateNewPatient(NewPatientView patient);
+
+        Task<bool> UpdateExistPatient(NewPatientView patient);
         
     }   
 }

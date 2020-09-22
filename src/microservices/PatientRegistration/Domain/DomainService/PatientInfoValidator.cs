@@ -6,10 +6,10 @@ namespace eClinic.PatientRegistration.Domain
     {
         public PatientInfoValidator()
         {
-            RuleFor(p => p.Id).NotEmpty();
+            RuleFor(p => p.ID).NotEmpty();
             RuleFor(p => p.Name).NotEmpty();
-            RuleFor(p => p.IdentificationNumber).NotEmpty();
-            RuleFor(p => p.Age).LessThanOrEqualTo(130);
+            RuleFor(p => p.IDCardNumber).NotEmpty();
+            RuleFor(p => p.Age).LessThanOrEqualTo(115);
             RuleFor(p => p.Height).GreaterThan(0);
             RuleFor(p => p.Weight).GreaterThan(0);
             RuleFor(p => p.HomeAddress.City).NotEmpty();

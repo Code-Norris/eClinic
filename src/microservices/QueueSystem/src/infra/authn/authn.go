@@ -26,7 +26,7 @@ type oidcDiscoveryInfo struct {
 }
 
 //VerifyOAuthToken validates access token validity
-func VerifyOAuthToken(idTokenRaw string) (bool) {
+func VerifyOAuthToken(idTokenRaw string) (error) {
 
 	discoveryURL := fmt.Sprintf(oidcconfigurl, tenantId)
 
@@ -62,10 +62,10 @@ func VerifyOAuthToken(idTokenRaw string) (bool) {
 	token, err := oidcVerifier.Verify(ctx, idTokenRaw)
 	if err != nil {
 		fmt.Println(err.Error())
-		return false
+		return err
 	}
 	fmt.Println(token)
 
-	return true
+	return nil
 	
 }

@@ -17,13 +17,13 @@ namespace eClinic.PatientRegistration.Test
         [Fact]
         public async Task CreateNewPatient_ShouldCreateNewPatient()
         {
-            var patientView = A.New<PatientView>();
+            var patientView = A.New<NewPatientView>();
             patientView.Height = 178;
             patientView.Weight = 78;
             patientView.Allergies = new string[] {"penicillin", "ibuprofen", "apirin"};
 
-            var mapper = new ObjectMapper();
-            var patient = mapper.Mapper.Map<PatientView, Patient>(patientView);
+            var mapper = new PropMapper();
+            var patient = mapper.Mapper.Map<NewPatientView, Patient>(patientView);
 
             //setup
             var patientRepo = new Mock<IPatientRepository>();
@@ -43,7 +43,7 @@ namespace eClinic.PatientRegistration.Test
                 new PatientAppService(patientRepo.Object, mapper.Mapper, patientInfoValidator.Object);
 
             //act
-            var success = await patientSvc.CreateNewPatient(patientView);
+            var success = await patientSvc.CreateNewPatient(patientView, "");
 
             success.IsValid.Should().BeTrue();
         }

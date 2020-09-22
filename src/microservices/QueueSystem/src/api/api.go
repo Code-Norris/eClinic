@@ -3,26 +3,67 @@ package api
 import (
 	"net/http"
 	"github.com/gorilla/mux"
-	"eClinic.com/QueueSystem/infra/authn"
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"time"
+	"math/rand"
 )
+
+type queueRegReq struct {
+	PatientID string			`json: "patientID"`
+}
+
+type QueueInfo struct {
+	QueueNumber int		`json: "queueNumber"`
+	PatientID string	`json: "patientID"`
+	QueuedAt time.Time	`json: "queuedAt"`
+}
 
 //Listen starts REST Api hosting
 func Listen() {
 
 	router := mux.NewRouter().StrictSlash(true)
 
-	router.HandleFunc("/api/q/pc", QPatientConsultation)
-	router.HandleFunc("/api/q/pp", QPatientPharmPayment)
+	router.HandleFunc("/api/q/pc", AADBearerAuthnMiddleware(QPatientConsultation)).Methods("POST")
 
-	http.ListenAndServe(":8080", router)
+	router.HandleFunc("/api/q/pp", AADBearerAuthnMiddleware(QPatientPharmPayment)).Methods("POST")
+
+
+	http.ListenAndServe(":9090", router)
 }
 
 func QPatientConsultation(w http.ResponseWriter, r *http.Request) {
 	//https://medium.com/@hugo.bjarred/rest-api-with-golang-and-mux-e934f581b8b5
 
-	authn.VerifyOAuthToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImppYk5ia0ZTU2JteFBZck45Q0ZxUms0SzRndyJ9.eyJhdWQiOiIxNGI0OGEyMS1jNWY3LTRjMzgtYjJmZC0xNjM2MWZlZjY4YzIiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3YyLjAiLCJpYXQiOjE2MDA0MTQ4NjAsIm5iZiI6MTYwMDQxNDg2MCwiZXhwIjoxNjAwNDE4NzYwLCJhaW8iOiJBV1FBbS84UUFBQUFWSTB0Mk1nd3YxVGo0L1ZRVlVLajJ2QUk2QVpQdDcwRXFSSDk1WlduQ1o4U1ZqYnNhT21ITGcydmo0Y3d6K21oZm1hdkZ4SEptdEJiS2YxTnh1WWdlYlQya0lLamo3YXFvVnpYRCtDbnVtckphbmQzdE5wb1I0RldBQnNqRTlGViIsIm5hbWUiOiJXZWl4aWFuIFpoYW5nIiwibm9uY2UiOiI0NTJiNmQ4NC01MDE4LTQ0OTQtOTViZi0yYzljN2U3YzFkYjQiLCJvaWQiOiI0NjRmNTY3Mi1jODRlLTQzZTUtOWUzOC1mNjNhZDc2NDllODAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ3ZWl4emhhQG1pY3Jvc29mdC5jb20iLCJyaCI6IjAuQVJvQXY0ajVjdkdHcjBHUnF5MTgwQkhiUnlHS3RCVDN4VGhNc3YwV05oX3ZhTUlhQUVjLiIsInN1YiI6IjVFM3c3ZHNXWXdSMlZCOXNTU2J6X3BQUkxRVHpmWlFxcXlMSjluR3FsLTgiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1dGkiOiJYbHJ4aTBlN0cwcS1iZXNMYVlzVkFBIiwidmVyIjoiMi4wIn0.NUZZQmqU1E8CDmXXPIIrEQ4CMPPd_8gZ7uOOboXqCQVPaIa57uPvA8CtkYK8Y_D4rA_6zb7cOWSKrqIdOKhbDbThQQV4ScsTTXQzx2Tzr3LqywEFQ3XaSiivRi8EkKfEDebcyBAOYY3aKD1r8TD4seF5nwHuxv29qwx_ooC5L7DZL226_z0nB37KS16VlBbi3mcM0krM8Y33NcRnt11EctPioV0D_qeaPBAa-udxHr1HcU8L9mVRF5Em65XwuQoS94MZ_bh42zIRvcqo7IV3C5wZ0cnqsd79iysbwTHNdr1ISZG6fW4_oqJ7aisM7APaK2yhLwO-aCuGBanX1QgKeg")
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Print(err.Error())
+	}
+
+	pid := queueRegReq{}
+
+	juerr := json.Unmarshal(body, &pid)
+	if juerr != nil {
+		log.Print(juerr.Error())
+	}
+
+	//TODO: read queueno from app svc
+
+	mq, merr := json.Marshal((QueueInfo{
+		QueueNumber: rand.Intn(50),
+		PatientID: pid.PatientID,
+		QueuedAt: time.Now(),
+	}))
+	if merr != nil {
+		log.Print(merr.Error())
+	}
+
+	w.Write(mq)
 }
 
+//QPatientPharmPayment saves post-consultation patient to persistent "queue"
+//for pharmacist and payment
 func QPatientPharmPayment(w http.ResponseWriter, r *http.Request) {
 	//https://medium.com/@hugo.bjarred/rest-api-with-golang-and-mux-e934f581b8b5
 }

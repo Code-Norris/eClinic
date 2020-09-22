@@ -3,7 +3,7 @@ using shortid.Configuration;
 
 namespace eClinic.PatientRegistration.AppService
 {
-    public class UniqueId
+    public class UID
     {
         public static string New()
         {

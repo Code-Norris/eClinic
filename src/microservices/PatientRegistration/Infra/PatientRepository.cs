@@ -21,8 +21,8 @@ namespace eClinic.PatientRegistration.Infra
 
         public async Task<bool> CreateNewPatient(Patient patient)
         {
-           var collection = _db.GetCollection<Patient>("Patient");
-           await collection.InsertOneAsync(patient);
+           //var collection = _db.GetCollection<Patient>("Patient");
+           //await collection.InsertOneAsync(patient);
            return true;
         }
 

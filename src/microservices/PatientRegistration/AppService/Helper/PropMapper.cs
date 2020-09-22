@@ -5,14 +5,14 @@ using shortid.Configuration;
 
 namespace eClinic.PatientRegistration.AppService
 {
-    public class ObjectMapper
+    public class PropMapper
     {
-        public ObjectMapper()
+        public PropMapper()
         {
             var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<PatientView, Address>();
-                cfg.CreateMap<PatientView, Patient>();
-                cfg.CreateMap<PatientInfoValidationResult, PatientCreationResult>();
+                cfg.CreateMap<NewPatientView, Address>();
+                cfg.CreateMap<NewPatientView, Patient>();
+                cfg.CreateMap<QueueInfo, PatientRegistrationResult>();
             });
 
             _mapper = config.CreateMapper();

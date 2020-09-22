@@ -98,7 +98,7 @@ namespace eClinic.PatientRegistration
 
         private void BuildDependency(IServiceCollection services)
         {
-            var objMapper = new ObjectMapper();
+            var objMapper = new PropMapper();
             var mapper = objMapper.Mapper;
 
             services.AddSingleton<IMapper>(mapper);

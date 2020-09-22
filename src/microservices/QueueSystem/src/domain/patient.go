@@ -14,11 +14,10 @@ type Address struct {
 type Patient struct {
 	IDCardNumber string
 	Name string
-	IdentificationNumber string
 	Age int
 	HomeAddress Address
     Height float32
     Weight float32
 	Allergies []string
-    RegistrationTime time.Time = time.Now()
+	RegistrationTime time.Time = time.Now()
 }
