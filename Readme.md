@@ -5,10 +5,14 @@ and demostrating through actual implementation of tactics that can solve these c
 
 * Desktop Frontend with Wails + Reactjs
 * AuthN with Azure AD 
-* AuthZ with Open Policy Agent
-* API Gateway pattern with Traefik
+* AuthZ
+  * authorization policies with Open Policy Agent
+  * user retrieval from Azure AD Graph API
+  * handles user role assignment
+* API Gateway with Traefik
 * Inter-service domain events messaging with Nats
 * Inter-service mTLS API calls with Linkerd (evaluating, or dapr)
 * Logging: Console stdout and stderr. FluentD and ELK for stdout/stderr logs
+* Distributed Tracing with Zipkin
 * Secrets: Azure Key Vault with AAD Pod Identity for secret retrieval
  
