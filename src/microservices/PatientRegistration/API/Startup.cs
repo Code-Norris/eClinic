@@ -43,18 +43,8 @@ namespace eClinic.PatientRegistration
                 
             BuildDependency(services);
 
-        services.AddMicrosoftIdentityWebApiAuthentication(Configuration, "AzureAd");
-
-        // services.AddAuthentication(AzureADDefaults.JwtBearerAuthenticationScheme)
-        //   .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
-
-            // services.AddMicrosoftIdentityWebAppAuthentication
-            //     (Configuration, "AzureAd","OpenIdConnect","Cookies");
-
-                    //.EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
-                    //.AddInMemoryTokenCaches();
-            //   services.AddMi(AzureADDefaults.AuthenticationScheme)
-            //     .AddAzureAD(options => config.Bind("AzureAd", options));
+            //validates access token
+            services.AddMicrosoftIdentityWebApiAuthentication(Configuration, "AzureAd");
             
             services.AddControllers();
         }
