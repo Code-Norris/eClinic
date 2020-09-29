@@ -14,5 +14,5 @@ and demostrating through actual implementation of tactics that can solve these c
 * Inter-service mTLS API calls with Linkerd (evaluating, or dapr)
 * Logging: Console stdout and stderr. FluentD and ELK for stdout/stderr logs
 * Distributed Tracing with Zipkin
-* Secrets: Azure Key Vault with AAD Pod Identity for secret retrieval
+* Secrets Management with Azure Key Vault provider for Secret Store CSI Driver
  
