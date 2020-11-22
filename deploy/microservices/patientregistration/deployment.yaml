@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: api-pr
-          image: acreclinic.azurecr.io/patientregistration/patientregistration:0.0.1
+          image: acreclinic.azurecr.io/patientregistration:patientregistration-0.0.1
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
