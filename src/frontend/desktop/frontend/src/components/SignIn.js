@@ -34,7 +34,10 @@ export default class SignIn extends Component {
     }
 
     login = () => {
-        console.log('button clicked')
-        this.authsvc.oidcSignin();
+        // console.log('button clicked')
+        // this.authsvc.oidcSignin(this.authsvc.loginRequest);
+
+        //call api: get access token
+        this.authsvc.oidcSignin(this.authsvc.tokenRequest);
     }
 }
