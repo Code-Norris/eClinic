@@ -1,6 +1,7 @@
 package log
 
 import(
+	"os"
 	logrus "github.com/sirupsen/logrus"
 )
 
@@ -8,9 +9,16 @@ import(
 
 func Init() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
+	logrus.SetOutput(os.Stdout)
 }
 
-func LogErr(err error) {
+func Info(message string) {
+	if len(message) > 0 {
+		logrus.Info(message)
+	}
+}
+
+func Err(err error) {
 	if err != nil {
 		logrus.Error(err)
 	}

@@ -29,6 +29,9 @@ func HTTPServerInit() {
 }
 
 func initAPIs() {
+
+	log.Info("PatientRegistration service starting...")
+
 	router := mux.NewRouter();
 
 	router.HandleFunc("/health", handleHealth).Methods("GET")
@@ -37,9 +40,11 @@ func initAPIs() {
 
 	router.HandleFunc("/api/patientreg/find", AADBearerAuthn(findPatientByName)).Methods("GET")
 
+	log.Info("PatientRegistration service started at :3000")
+
 	err := http.ListenAndServe(":3000", router)
 	
-	log.LogErr(err)
+	log.Err(err)
 }
 
 func registerNewPatient(w http.ResponseWriter, r *http.Request) {
@@ -47,7 +52,7 @@ func registerNewPatient(w http.ResponseWriter, r *http.Request) {
 	var patient Patient;
 
 	 err := json.NewDecoder(r.Body).Decode(&patient)
-	 log.LogErr(err)
+	 log.Err(err)
 
 	 w.WriteHeader(200)
 }
@@ -56,7 +61,7 @@ func findPatientByName(w http.ResponseWriter, r *http.Request) {
 	keys, ok := r.URL.Query()["name"]
 
 	if !ok || len(keys[0]) < 1 {
-		log.LogErr(errors.New("findPatientByName.name not found"))
+		log.Err(errors.New("findPatientByName.name not found"))
 		w.WriteHeader(400)
 		w.Write([]byte("name not found"))
 		return
@@ -67,7 +72,7 @@ func findPatientByName(w http.ResponseWriter, r *http.Request) {
 	p.PatienID = string(rand.Int())
 
 	err := faker.FakeData(&p)
-	log.LogErr(err)
+	log.Err(err)
 
 	byteP, _ := json.Marshal(p)
 
