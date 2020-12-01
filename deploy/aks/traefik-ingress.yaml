@@ -11,7 +11,7 @@ spec:
   - host: aks-ingress.southeastasia.cloudapp.azure.com
     http:
       paths:
-      - path: /health
+      - path: /api/pr/health
         backend:
           serviceName: svc-pr
           servicePort: 80

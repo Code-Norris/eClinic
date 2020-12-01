@@ -23,13 +23,13 @@ spec:
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
-              path: /health
+              path: /api/pr/health
               port: 3000
             initialDelaySeconds: 3
             periodSeconds: 3
           readinessProbe:
               httpGet:
-                path: /health
+                path: /api/pr/health
                 port: 3000
               initialDelaySeconds: 3
               periodSeconds: 3
