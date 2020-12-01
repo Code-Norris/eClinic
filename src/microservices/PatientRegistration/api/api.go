@@ -34,11 +34,11 @@ func initAPIs() {
 
 	router := mux.NewRouter();
 
-	router.HandleFunc("/health", handleHealth).Methods("GET")
+	router.HandleFunc("/api/pr/health", handleHealth).Methods("GET")
 	
-	router.HandleFunc("/api/patientreg/new", AADBearerAuthn(registerNewPatient)).Methods("POST")
+	router.HandleFunc("/api/pr/new", AADBearerAuthn(registerNewPatient)).Methods("POST")
 
-	router.HandleFunc("/api/patientreg/find", AADBearerAuthn(findPatientByName)).Methods("GET")
+	router.HandleFunc("/api/pr/find", AADBearerAuthn(findPatientByName)).Methods("GET")
 
 	log.Info("PatientRegistration service started at :3000")
 

@@ -1,16 +1,17 @@
-apiVersion: extensions/v1beta1
 kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
 metadata:
-name: traefik-web-ui
-namespace: traefik
-annotations:
-kubernetes.io/ingress.class: traefik
+  name: api.patientregistration
+  namespace: eclinic
+  annotations:
+     kubernetes.io/ingress.class: traefik              
+     traefik.ingress.kubernetes.io/router.middlewares: default-rewrite-slash@kubernetescrd
 spec:
   rules:
-  - host: www.custom-domain.com
-  http:
-    paths:
-    - path: /
-    backend:
-      serviceName: svc-pr.eclinic
-      servicePort: http
+  - host: aks-ingress.southeastasia.cloudapp.azure.com
+    http:
+      paths:
+      - path: /health
+        backend:
+          serviceName: svc-pr
+          servicePort: 80
