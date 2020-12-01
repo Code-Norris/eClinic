@@ -12,5 +12,5 @@ spec:
     paths:
     - path: /
     backend:
-      serviceName: service-pr.eclinic
+      serviceName: svc-pr.eclinic
       servicePort: web
