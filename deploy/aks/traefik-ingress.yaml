@@ -13,4 +13,4 @@ spec:
     - path: /
     backend:
       serviceName: svc-pr.eclinic
-      servicePort: web
+      servicePort: http
