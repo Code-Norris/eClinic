@@ -15,3 +15,11 @@ spec:
         backend:
           serviceName: svc-pr
           servicePort: 80
+      - path: /api/pr/find
+        backend:
+          serviceName: svc-pr
+          servicePort: 80
+      - path: /api/pr/new
+        backend:
+          serviceName: svc-pr
+          servicePort: 80
