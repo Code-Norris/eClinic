@@ -15,4 +15,7 @@ and demostrating through actual implementation of tactics that can solve these c
 * Logging: Console stdout and stderr. FluentD and ELK for stdout/stderr logs
 * Distributed Tracing with Zipkin
 * Secrets Management with Azure Key Vault provider for Secret Store CSI Driver
+
+
+<b>*Project temporary shelved</b>
  
